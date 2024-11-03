@@ -19,6 +19,7 @@
   ],
   "coveragePathIgnorePatterns": [
     "<rootDir>/src/main.ts",
+    "<rootDir>/src/config/*",
     ".module.ts",
     "index.ts"
   ]
