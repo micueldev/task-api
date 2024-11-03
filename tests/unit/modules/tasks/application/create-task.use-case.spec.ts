@@ -1,23 +1,19 @@
-import { CreateTaskUseCase } from "src/modules/tasks/application/use-cases/create-task.use-case";
-import { MockTaskRepository } from "tests/unit/__mocks__/tasks/mock-task.repository";
-import { TaskMother } from "../domain/mothers/task.mother";
+import { CreateTaskUseCase } from 'src/modules/tasks/application/use-cases/create-task.use-case';
+import { MockTaskRepository } from 'tests/unit/__mocks__/tasks/mock-task.repository';
+import { TaskMother } from '../domain/mothers/task.mother';
 
 describe('CreateTask UseCase', () => {
-  const TaskRepository = new MockTaskRepository();
-  const createTaskUseCase = new CreateTaskUseCase(
-    TaskRepository,
-  );
+  const taskRepository = new MockTaskRepository();
+  const createTaskUseCase = new CreateTaskUseCase(taskRepository);
 
   it('should save the task', async () => {
-    const Task = TaskMother.create({
+    const task = TaskMother.create({
       isCompleted: false,
       deletedAt: null,
     });
 
-    await createTaskUseCase.run(
-      Task.toPrimitives()
-    );
+    await createTaskUseCase.run(task.toPrimitives());
 
-    TaskRepository.assertCreateTaskHasBeenCalledWith(Task);
+    taskRepository.assertCreateTaskHasBeenCalledWith(task);
   });
 });

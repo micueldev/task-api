@@ -9,7 +9,7 @@ export class TaskService {
   constructor(private readonly taskRepository: TaskRepository) {}
   async findTask(criteria: TaskCriteria): Promise<Task> {
     const task = await this.searchTask(criteria);
-    if(!task){
+    if (!task) {
       throw new TaskNotFoundError();
     }
     return task;

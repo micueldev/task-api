@@ -87,22 +87,39 @@ export class Task {
     });
   }
 
-  public getId(): string{
+  public getId(): string {
     return this.id;
   }
-  public getTitle(): string{
+  public getTitle(): string {
     return this.title;
   }
-  public getDescription(): string{
+  public getDescription(): string {
     return this.description;
   }
-  public getPriority(): TaskPriority{
-    return this.priority
+  public getPriority(): TaskPriority {
+    return this.priority;
   }
-  public getIsCompleted(): boolean{
+  public getIsCompleted(): boolean {
     return this.isCompleted;
   }
-  public getDeletedAt(): Date | null{
+  public getDeletedAt(): Date | null {
     return this.deletedAt;
+  }
+
+  public updateValues({
+    title,
+    description,
+    priority,
+    isCompleted,
+  }: {
+    title?: string;
+    description?: string;
+    priority?: TaskPriority;
+    isCompleted?: boolean;
+  }) {
+    this.title = title ?? this.title;
+    this.description = description ?? this.description;
+    this.priority = priority ?? this.priority;
+    this.isCompleted = isCompleted ?? this.isCompleted;
   }
 }

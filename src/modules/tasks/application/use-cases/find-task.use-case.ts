@@ -14,12 +14,10 @@ export class FindTaskUseCase {
     @Inject(TASK_REPOSITORY_ALIAS)
     private readonly taskRepository: TaskRepository,
   ) {
-    this.taskService = new TaskService(taskRepository);
+    this.taskService = new TaskService(this.taskRepository);
   }
 
-  async run({
-    criteria
-  }: FindTaskInput): Promise<Task> {
+  async run({ criteria }: FindTaskInput): Promise<Task> {
     return this.taskService.findTask(criteria);
   }
 }

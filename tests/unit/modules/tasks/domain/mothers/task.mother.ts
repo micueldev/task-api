@@ -31,14 +31,14 @@ export class TaskMother {
     });
   }
 
-  static random(): Task{
+  static random(): Task {
     return new Task({
-      id :UuidMother.random(),
+      id: UuidMother.random(),
       title: StringMother.random(),
       description: StringMother.random(),
       priority: TaskPriorityMother.random(),
       isCompleted: BooleanMother.random(),
       deletedAt: DateMother.random(),
-    })
+    });
   }
 }
