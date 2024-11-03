@@ -7,15 +7,26 @@ import { CreateTaskUseCase } from "../../application/use-cases/create-task.use-c
 import { UpdateTaskBodyDto } from "../dtos/request/update-task-body.dto";
 import { UpdateTaskUseCase } from "../../application/use-cases/update-task.use-case";
 import { DeleteTaskUseCase } from "../../application/use-cases/delete-task.use-case";
+import { SearchTasksUseCase } from "../../application/use-cases/search-tasks.use-case";
 
 @Controller('tasks')
 export class TasksController {
   constructor(
+    private readonly searchTasksUseCase: SearchTasksUseCase,
     private readonly findTaskUseCase: FindTaskUseCase,
     private readonly createTaskUseCase: CreateTaskUseCase,
     private readonly updateTaskUseCase: UpdateTaskUseCase,
     private readonly deleteTaskUseCase: DeleteTaskUseCase,
   ) {}
+
+  @HttpCode(HttpStatus.OK)
+  @Get()
+  async search(
+  ): Promise<TaskResponseDto[]> {
+    const criteria = TaskCriteria.createEmpty();
+    const tasks = await this.searchTasksUseCase.run({criteria});
+    return tasks.map(taks=>taks.toPrimitives());
+  }
 
   @HttpCode(HttpStatus.OK)
   @Get(':id')

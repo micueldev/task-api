@@ -28,6 +28,29 @@ describe('TasksController test', () => {
     await app.close();
   });
 
+  it('should get tasks', async () => {
+    let res = await base.getTasks(
+      app
+    );
+    base.expectOk(res);
+    base.expectTypeJson(res);
+    let body = res.body;
+    expect(body.length).toEqual(0);
+
+     await base.createTaskModel(taskRepository,{});
+    await base.createTaskModel(taskRepository,{});
+    await base.createTaskModel(taskRepository,{});
+    await base.createTaskModel(taskRepository,{});
+
+    res = await base.getTasks(
+      app
+    );
+    base.expectOk(res);
+    base.expectTypeJson(res);
+    body = res.body;
+    expect(body.length).toEqual(4);
+  });
+
   it('should get a task', async () => {
     const task = await base.createTaskModel(taskRepository,{});
 

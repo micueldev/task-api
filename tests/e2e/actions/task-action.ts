@@ -34,6 +34,16 @@ export const createTaskModel = async (
   return task;
 };
 
+export const getTasks = (
+  app: INestApplication,
+): Promise<Response> => {
+  return requestApi({
+    app,
+    method: Method.GET,
+    path: `/tasks`,
+  });
+};
+
 export const getTask = (
   app: INestApplication,
   taskId: string,
