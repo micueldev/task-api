@@ -17,6 +17,10 @@ export const expectOkCreated = (res: Response) => {
   expect(res.statusCode).toEqual(201);
 };
 
+export const expectedNoContent = (res: Response) => {
+  expect(res.statusCode).toEqual(204);
+};
+
 export const expectBadRequest = (res: Response) => {
   expect(res.statusCode).toEqual(400);
 };

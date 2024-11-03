@@ -4,6 +4,9 @@ import { TASK_REPOSITORY_ALIAS, TaskRepository } from 'src/modules/tasks/domain/
 import { DataSource } from 'typeorm';
 import { TypeOrmTaskEntity as TaskEntity } from 'src/modules/tasks/infrastructure/persistence/typeorm-task.entity';
 import { UuidMother } from 'tests/unit/modules/shared/domain/mothers/uuid.mother';
+import { TaskMother } from 'tests/unit/modules/tasks/domain/mothers/task.mother';
+import { TaskCriteria } from 'src/modules/tasks/domain/task-criteria';
+import { TaskPriorityMother } from 'tests/unit/modules/tasks/domain/mothers/task-priority.mother';
 
 describe('TasksController test', () => {
   let app: INestApplication;
@@ -40,6 +43,74 @@ describe('TasksController test', () => {
 
   it('should get http error with a not existing task', async () => {
     const res = await base.getTask(app, UuidMother.random());
+    base.expectNotFound(res);
+    base.expectTypeJson(res);
+  });
+
+  it('should create a task', async () => {
+    const task = TaskMother.create({
+      isCompleted: false
+    });
+
+    const res = await base.createTask(
+      app,
+      {...task.toPrimitives()}
+    );
+    base.expectOkCreated(res);
+    base.expectTypeEmpty(res);
+
+    const taskSaved = await taskRepository.searchOneTaskBy(TaskCriteria.createById(task.getId()));
+    expect(taskSaved).toEqual(task);
+  });
+
+  it('should update a task', async () => {
+    const task = await base.createTaskModel(taskRepository,{});
+
+    const newPriority = TaskPriorityMother.random();
+
+    const res = await base.updateTask(
+      app,
+      task.getId(),
+      {priority: newPriority}
+    );
+    base.expectedNoContent(res);
+    base.expectTypeEmpty(res);
+
+    const taskUpdated = await taskRepository.searchOneTaskBy(TaskCriteria.createById(task.getId()));
+    expect(taskUpdated.getPriority()).toEqual(newPriority);
+  });
+
+  it('should http error on update a not existing task', async () => {
+    const newPriority = TaskPriorityMother.random();
+
+    const res = await base.updateTask(
+      app,
+      UuidMother.random(),
+      {priority: newPriority}
+    );
+    base.expectNotFound(res);
+    base.expectTypeJson(res);
+  });
+
+  it('should delete a task', async () => {
+    const task = await base.createTaskModel(taskRepository,{});
+
+    const res = await base.deleteTask(
+      app,
+      task.getId(),
+    );
+    base.expectedNoContent(res);
+    base.expectTypeEmpty(res);
+
+    const taskSearched = await taskRepository.searchOneTaskBy(TaskCriteria.createById(task.getId()));
+    expect(taskSearched).toBeNull();
+  });
+
+  it('should http error on delete a task', async () => {
+    const res = await base.deleteTask(
+      app,
+      UuidMother.random(),
+    );
     base.expectNotFound(res);
     base.expectTypeJson(res);
   });

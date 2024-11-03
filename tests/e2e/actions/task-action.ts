@@ -44,3 +44,73 @@ export const getTask = (
     path: `/tasks/${taskId}`,
   });
 };
+
+export const createTask = (
+  app: INestApplication,
+  {
+    id = UuidMother.random(),
+    title = StringMother.random(),
+    description = StringMother.random(),
+    priority = TaskPriorityMother.random(),
+  }: {
+    id?: string;
+    title?: string;
+    description?: string;
+    priority?: string;
+  }
+): Promise<Response> => {
+  return requestApi({
+    app,
+    method: Method.POST,
+    path: `/tasks`,
+    body: {
+      id,
+      title,
+      description,
+      priority,
+    }
+  })
+};
+
+export const updateTask = (
+  app: INestApplication,
+  taskId: string,
+  {
+    title,
+    description,
+    priority,
+  }: {
+    title?: string;
+    description?: string;
+    priority?: string;
+  }
+): Promise<Response> => {
+  const body = {};
+  if (title !== undefined) {
+    body['title'] = title;
+  }
+  if (description !== undefined) {
+    body['description'] = description;
+  }
+  if (priority !== undefined) {
+    body['priority'] = priority;
+  }
+
+  return requestApi({
+    app,
+    method: Method.PATCH,
+    path: `/tasks/${taskId}`,
+    body
+  })
+};
+
+export const deleteTask = (
+  app: INestApplication,
+  taskId: string,
+): Promise<Response> => {
+  return requestApi({
+    app,
+    method: Method.DELETE,
+    path: `/tasks/${taskId}`,
+  })
+};

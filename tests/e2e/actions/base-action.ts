@@ -5,6 +5,8 @@ import { Request, Response } from 'supertest';
 export enum Method {
   GET = 'get',
   POST = 'post',
+  PATCH = 'patch',
+  DELETE = 'delete'
 }
 
 export const requestApi = ({
@@ -24,6 +26,10 @@ export const requestApi = ({
   let _request: Request;
   if (method === Method.POST) {
     _request = httpApp.post(apiPath).send(body);
+  } else if (method === Method.PATCH) {
+    _request = httpApp.patch(apiPath).send(body);
+  } else if (method === Method.DELETE) {
+    _request = httpApp.delete(apiPath);
   } else {
     _request = httpApp.get(apiPath);
   }
