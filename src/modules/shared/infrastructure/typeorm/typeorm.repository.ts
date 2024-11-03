@@ -9,7 +9,6 @@ export abstract class TypeOrmRepository<E> {
 
   constructor(
     protected readonly dataSource: DataSource,
-    protected readonly fieldMapper: Map<string, string>,
   ) {
     this.typeOrmConverter = new TypeOrmConverter();
   }

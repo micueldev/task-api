@@ -15,6 +15,7 @@
     "lint": "eslint \"{src,apps,libs,tests}/**/*.ts\" --fix",
     "test": "jest",
     "test:unit": "NODE_ENV=test jest --config ./tests/unit/jest-unit.json",
+    "test:integration": "NODE_ENV=test jest --config ./tests/integration/jest-integration.json",
     "test:e2e": "NODE_ENV=test jest --config ./tests/e2e/jest-e2e.json",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

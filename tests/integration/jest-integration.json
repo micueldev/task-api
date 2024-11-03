@@ -1,0 +1,17 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "../../",
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/src/$1",
+    "^tests/unit/(.*)$": "<rootDir>/tests/unit/$1",
+    "^tests/integration/(.*)$": "<rootDir>/tests/integration/$1"
+  },
+  "testEnvironment": "node",
+  "testRegex": "/tests/integration/.*.spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "collectCoverageFrom": [
+    "src/**/*.(t|j)s"
+  ]
+}

@@ -13,7 +13,6 @@ describe('UpdateTask UseCase', () => {
 
   it('should update the task', async () => {
     const task = TaskMother.create({
-      deletedAt: null,
     });
     taskRepository.returnOnSearchOneTaskBy(task);
 

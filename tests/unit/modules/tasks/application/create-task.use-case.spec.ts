@@ -9,7 +9,6 @@ describe('CreateTask UseCase', () => {
   it('should save the task', async () => {
     const task = TaskMother.create({
       isCompleted: false,
-      deletedAt: null,
     });
 
     await createTaskUseCase.run(task.toPrimitives());

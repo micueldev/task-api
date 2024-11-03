@@ -10,7 +10,6 @@ export interface ITask {
   description: string;
   priority: TaskPriority;
   isCompleted: boolean;
-  deletedAt: Date | null;
 }
 
 export class Task {
@@ -19,7 +18,6 @@ export class Task {
   private description: string;
   private priority: TaskPriority;
   private isCompleted: boolean;
-  private deletedAt: Date | null;
 
   constructor({
     id,
@@ -27,14 +25,12 @@ export class Task {
     description,
     priority,
     isCompleted,
-    deletedAt,
   }: ITask) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.priority = priority;
     this.isCompleted = isCompleted;
-    this.deletedAt = deletedAt;
   }
 
   toPrimitives(): ITask {
@@ -44,7 +40,6 @@ export class Task {
       description: this.description,
       priority: this.priority,
       isCompleted: this.isCompleted,
-      deletedAt: this.deletedAt,
     };
   }
 
@@ -65,7 +60,6 @@ export class Task {
       description,
       priority,
       isCompleted: false,
-      deletedAt: null,
     });
   }
 
@@ -75,7 +69,6 @@ export class Task {
     description,
     priority,
     isCompleted,
-    deletedAt,
   }: ITask): Task {
     return new Task({
       id,
@@ -83,7 +76,6 @@ export class Task {
       description,
       priority,
       isCompleted,
-      deletedAt,
     });
   }
 
@@ -101,9 +93,6 @@ export class Task {
   }
   public getIsCompleted(): boolean {
     return this.isCompleted;
-  }
-  public getDeletedAt(): Date | null {
-    return this.deletedAt;
   }
 
   public updateValues({
