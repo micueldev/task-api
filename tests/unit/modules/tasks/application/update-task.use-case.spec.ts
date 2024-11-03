@@ -12,8 +12,7 @@ describe('UpdateTask UseCase', () => {
   const updateTaskUseCase = new UpdateTaskUseCase(taskRepository);
 
   it('should update the task', async () => {
-    const task = TaskMother.create({
-    });
+    const task = TaskMother.create({});
     taskRepository.returnOnSearchOneTaskBy(task);
 
     const newTitle = StringMother.random();
@@ -42,15 +41,15 @@ describe('UpdateTask UseCase', () => {
     const newDescription = StringMother.random();
     const newPriority = TaskPriorityMother.random();
     const newIsCompleted = BooleanMother.random();
-    
-    await expect(updateTaskUseCase.run({
-      id: task.getId(),
-      title: newTitle,
-      description: newDescription,
-      priority: newPriority,
-      isCompleted: newIsCompleted,
-    })).rejects.toThrow(
-      TaskNotFoundError,
-    );
+
+    await expect(
+      updateTaskUseCase.run({
+        id: task.getId(),
+        title: newTitle,
+        description: newDescription,
+        priority: newPriority,
+        isCompleted: newIsCompleted,
+      }),
+    ).rejects.toThrow(TaskNotFoundError);
   });
 });

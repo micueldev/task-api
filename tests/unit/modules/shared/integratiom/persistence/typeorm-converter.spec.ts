@@ -1,6 +1,6 @@
-import { TypeOrmConverter } from "src/modules/shared/infrastructure/typeorm/typeorm-converter";
-import { UuidMother } from "../../domain/mothers/uuid.mother";
-import { TestCriteria } from "../../domain/test-criteria";
+import { TypeOrmConverter } from 'src/modules/shared/infrastructure/typeorm/typeorm-converter';
+import { UuidMother } from '../../domain/mothers/uuid.mother';
+import { TestCriteria } from '../../domain/test-criteria';
 import { SelectQueryBuilder } from 'typeorm';
 
 describe('TypeOrmConverter test', () => {

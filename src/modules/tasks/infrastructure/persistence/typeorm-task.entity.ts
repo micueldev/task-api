@@ -18,12 +18,10 @@ export class TypeOrmTaskEntity {
   })
   description: string;
 
-
   @Column({
     type: 'text',
   })
   priority: TaskPriority;
-
 
   @Column({
     type: 'boolean',

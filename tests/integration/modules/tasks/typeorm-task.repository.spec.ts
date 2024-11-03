@@ -1,16 +1,16 @@
-import { Test } from "@nestjs/testing";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { Task } from "src/modules/tasks/domain/task";
-import { TaskCriteria } from "src/modules/tasks/domain/task-criteria";
-import { TaskNotFoundError } from "src/modules/tasks/domain/task-not-found.error";
-import { TypeOrmTestingModule } from "tests/integration/base";
-import { UuidMother } from "tests/unit/modules/shared/domain/mothers/uuid.mother";
-import { TaskMother } from "tests/unit/modules/tasks/domain/mothers/task.mother";
+import { Test } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Task } from 'src/modules/tasks/domain/task';
+import { TaskCriteria } from 'src/modules/tasks/domain/task-criteria';
+import { TaskNotFoundError } from 'src/modules/tasks/domain/task-not-found.error';
+import { TypeOrmTestingModule } from 'tests/integration/base';
+import { UuidMother } from 'tests/unit/modules/shared/domain/mothers/uuid.mother';
+import { TaskMother } from 'tests/unit/modules/tasks/domain/mothers/task.mother';
 import { DataSource } from 'typeorm';
 import { TypeOrmTaskEntity as TaskEntity } from 'src/modules/tasks/infrastructure/persistence/typeorm-task.entity';
-import { TypeOrmTaskRepository as TaskRepository } from "src/modules/tasks/infrastructure/persistence/typeorm-task.repository";
-import { StringMother } from "tests/unit/modules/shared/domain/mothers/string.mother";
-import { TaskPriorityMother } from "tests/unit/modules/tasks/domain/mothers/task-priority.mother";
+import { TypeOrmTaskRepository as TaskRepository } from 'src/modules/tasks/infrastructure/persistence/typeorm-task.repository';
+import { StringMother } from 'tests/unit/modules/shared/domain/mothers/string.mother';
+import { TaskPriorityMother } from 'tests/unit/modules/tasks/domain/mothers/task-priority.mother';
 
 describe('TypeOrmTaskRepository test', () => {
   let taskRepository: TaskRepository;
@@ -25,9 +25,7 @@ describe('TypeOrmTaskRepository test', () => {
       providers: [TaskRepository],
     }).compile();
     dataSource = moduleRef.get<DataSource>(DataSource);
-    taskRepository = moduleRef.get<TaskRepository>(
-      TaskRepository,
-    );
+    taskRepository = moduleRef.get<TaskRepository>(TaskRepository);
   });
 
   beforeEach(async () => {
@@ -42,11 +40,7 @@ describe('TypeOrmTaskRepository test', () => {
     const task1 = await createRandomTask(taskRepository);
     const task2 = await createRandomTask(taskRepository);
     const task3 = await createRandomTask(taskRepository);
-    const tasks = [
-      task1,
-      task2,
-      task3,
-    ];
+    const tasks = [task1, task2, task3];
 
     const taskFound = await taskRepository.searchTasksBy(
       TaskCriteria.createEmpty(),
@@ -78,7 +72,7 @@ describe('TypeOrmTaskRepository test', () => {
     task.updateValues({
       title: newTitle,
       priority: newPriority,
-    })
+    });
     await taskRepository.updateTask(task);
 
     const taskUpdated = await taskRepository.searchOneTaskBy(
@@ -91,9 +85,9 @@ describe('TypeOrmTaskRepository test', () => {
   it('should throw error on update a not exists task', async () => {
     const task = TaskMother.random();
 
-    await expect(
-      taskRepository.updateTask(task),
-    ).rejects.toThrow(TaskNotFoundError);
+    await expect(taskRepository.updateTask(task)).rejects.toThrow(
+      TaskNotFoundError,
+    );
   });
 
   it('should test delete a exists task', async () => {
@@ -110,11 +104,11 @@ describe('TypeOrmTaskRepository test', () => {
   it('should throw error on delete a not exists task', async () => {
     const task = TaskMother.random();
 
-    await expect(
-      taskRepository.deleteTask(task.getId()),
-    ).rejects.toThrow(TaskNotFoundError);
+    await expect(taskRepository.deleteTask(task.getId())).rejects.toThrow(
+      TaskNotFoundError,
+    );
   });
-}); 
+});
 
 const createRandomTask = async (
   taskRepository: TaskRepository,

@@ -7,13 +7,11 @@ export const setApplicationConfig = (app: INestApplication) => {
   app.setGlobalPrefix('api');
   app.enableCors({
     origin: '*',
-    methods: 'GET,PATCH,POST,DELETE'
+    methods: 'GET,PATCH,POST,DELETE',
   });
   setGlobalFilters(app);
 };
 
 const setGlobalFilters = (app: INestApplication) => {
-  app.useGlobalFilters(
-   new HttpExceptionFilter()
-  );
+  app.useGlobalFilters(new HttpExceptionFilter());
 };

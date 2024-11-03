@@ -7,9 +7,7 @@ import { TypeOrmConverter } from './typeorm-converter';
 export abstract class TypeOrmRepository<E> {
   protected readonly typeOrmConverter: TypeOrmConverter;
 
-  constructor(
-    protected readonly dataSource: DataSource,
-  ) {
+  constructor(protected readonly dataSource: DataSource) {
     this.typeOrmConverter = new TypeOrmConverter();
   }
 

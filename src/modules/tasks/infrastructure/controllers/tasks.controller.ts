@@ -1,13 +1,24 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post } from "@nestjs/common";
-import { FindTaskUseCase } from "../../application/use-cases/find-task.use-case";
-import { TaskResponseDto } from "../dtos/response/task-response.dto";
-import { TaskCriteria } from "../../domain/task-criteria";
-import { CreateTaskBodyDto } from "../dtos/request/create-task-body.dto";
-import { CreateTaskUseCase } from "../../application/use-cases/create-task.use-case";
-import { UpdateTaskBodyDto } from "../dtos/request/update-task-body.dto";
-import { UpdateTaskUseCase } from "../../application/use-cases/update-task.use-case";
-import { DeleteTaskUseCase } from "../../application/use-cases/delete-task.use-case";
-import { SearchTasksUseCase } from "../../application/use-cases/search-tasks.use-case";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { FindTaskUseCase } from '../../application/use-cases/find-task.use-case';
+import { TaskResponseDto } from '../dtos/response/task-response.dto';
+import { TaskCriteria } from '../../domain/task-criteria';
+import { CreateTaskBodyDto } from '../dtos/request/create-task-body.dto';
+import { CreateTaskUseCase } from '../../application/use-cases/create-task.use-case';
+import { UpdateTaskBodyDto } from '../dtos/request/update-task-body.dto';
+import { UpdateTaskUseCase } from '../../application/use-cases/update-task.use-case';
+import { DeleteTaskUseCase } from '../../application/use-cases/delete-task.use-case';
+import { SearchTasksUseCase } from '../../application/use-cases/search-tasks.use-case';
 
 @Controller('tasks')
 export class TasksController {
@@ -21,11 +32,10 @@ export class TasksController {
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  async search(
-  ): Promise<TaskResponseDto[]> {
+  async search(): Promise<TaskResponseDto[]> {
     const criteria = TaskCriteria.createEmpty();
-    const tasks = await this.searchTasksUseCase.run({criteria});
-    return tasks.map(taks=>taks.toPrimitives());
+    const tasks = await this.searchTasksUseCase.run({ criteria });
+    return tasks.map((taks) => taks.toPrimitives());
   }
 
   @HttpCode(HttpStatus.OK)
@@ -33,16 +43,14 @@ export class TasksController {
   async findOne(
     @Param('id', ParseUUIDPipe) taskId: string,
   ): Promise<TaskResponseDto> {
-    const criteria = TaskCriteria.createById(taskId)
-    const task = await this.findTaskUseCase.run({criteria});
-    return {...task.toPrimitives()};
+    const criteria = TaskCriteria.createById(taskId);
+    const task = await this.findTaskUseCase.run({ criteria });
+    return { ...task.toPrimitives() };
   }
 
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  async create(
-    @Body() createTaskBody: CreateTaskBodyDto,
-  ): Promise<void> {
+  async create(@Body() createTaskBody: CreateTaskBodyDto): Promise<void> {
     return this.createTaskUseCase.run(createTaskBody);
   }
 
@@ -52,14 +60,12 @@ export class TasksController {
     @Param('id', ParseUUIDPipe) taskId: string,
     @Body() updateTaskBody: UpdateTaskBodyDto,
   ): Promise<void> {
-    return this.updateTaskUseCase.run({...updateTaskBody, id: taskId});
+    return this.updateTaskUseCase.run({ ...updateTaskBody, id: taskId });
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  async delete(
-    @Param('id', ParseUUIDPipe) taskId: string
-  ): Promise<void> {
-    return this.deleteTaskUseCase.run({taskId});
+  async delete(@Param('id', ParseUUIDPipe) taskId: string): Promise<void> {
+    return this.deleteTaskUseCase.run({ taskId });
   }
 }

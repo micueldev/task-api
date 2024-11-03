@@ -1,6 +1,6 @@
-import { ITask, TaskPriority } from "src/modules/tasks/domain/task";
+import { ITask, TaskPriority } from 'src/modules/tasks/domain/task';
 
-export class TaskResponseDto implements ITask{
+export class TaskResponseDto implements ITask {
   id: string;
   title: string;
   description: string;

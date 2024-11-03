@@ -9,12 +9,9 @@ export class DeleteTaskUseCase {
   constructor(
     @Inject(TASK_REPOSITORY_ALIAS)
     private readonly taskRepository: TaskRepository,
-  ) {
-  }
+  ) {}
 
-  async run({
-    taskId
-  }: DeleteTaskInput): Promise<void> {
+  async run({ taskId }: DeleteTaskInput): Promise<void> {
     return this.taskRepository.deleteTask(taskId);
   }
 }

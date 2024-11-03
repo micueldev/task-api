@@ -26,7 +26,7 @@ export const createTaskModel = async (
     id,
     title,
     description,
-    priority
+    priority,
   });
 
   await taskRepository.createTask(task);
@@ -34,9 +34,7 @@ export const createTaskModel = async (
   return task;
 };
 
-export const getTasks = (
-  app: INestApplication,
-): Promise<Response> => {
+export const getTasks = (app: INestApplication): Promise<Response> => {
   return requestApi({
     app,
     method: Method.GET,
@@ -67,7 +65,7 @@ export const createTask = (
     title?: string;
     description?: string;
     priority?: string;
-  }
+  },
 ): Promise<Response> => {
   return requestApi({
     app,
@@ -78,8 +76,8 @@ export const createTask = (
       title,
       description,
       priority,
-    }
-  })
+    },
+  });
 };
 
 export const updateTask = (
@@ -93,7 +91,7 @@ export const updateTask = (
     title?: string;
     description?: string;
     priority?: string;
-  }
+  },
 ): Promise<Response> => {
   const body = {};
   if (title !== undefined) {
@@ -110,8 +108,8 @@ export const updateTask = (
     app,
     method: Method.PATCH,
     path: `/tasks/${taskId}`,
-    body
-  })
+    body,
+  });
 };
 
 export const deleteTask = (
@@ -122,5 +120,5 @@ export const deleteTask = (
     app,
     method: Method.DELETE,
     path: `/tasks/${taskId}`,
-  })
+  });
 };

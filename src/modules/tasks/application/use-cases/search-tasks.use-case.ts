@@ -11,8 +11,7 @@ export class SearchTasksUseCase {
   constructor(
     @Inject(TASK_REPOSITORY_ALIAS)
     private readonly taskRepository: TaskRepository,
-  ) {
-  }
+  ) {}
 
   async run({ criteria }: FindTaskInput): Promise<Task[]> {
     return this.taskRepository.searchTasksBy(criteria);

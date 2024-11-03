@@ -9,7 +9,7 @@ describe('DeleteTask UseCase', () => {
   it('should update the task', async () => {
     const taskId = UuidMother.random();
     await deleteTaskUseCase.run({
-      taskId
+      taskId,
     });
 
     taskRepository.assertDeleteTaskHasBeenCalledWith(taskId);

@@ -70,10 +70,8 @@ describe('HttpExceptionFilter test', () => {
       mockHost as ArgumentsHost,
     );
 
-    expect(response.status).toHaveBeenCalledWith(
-      HttpStatus.NOT_FOUND,
-    );
-    expect(response.json).toHaveBeenCalledWith({ message:  'Test not found'});
+    expect(response.status).toHaveBeenCalledWith(HttpStatus.NOT_FOUND);
+    expect(response.json).toHaveBeenCalledWith({ message: 'Test not found' });
     expect(loggerErrorSpy).toHaveBeenCalledWith(
       ...[exception.message, exception.stack, { request }],
     );

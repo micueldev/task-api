@@ -19,13 +19,7 @@ export class Task {
   private priority: TaskPriority;
   private isCompleted: boolean;
 
-  constructor({
-    id,
-    title,
-    description,
-    priority,
-    isCompleted,
-  }: ITask) {
+  constructor({ id, title, description, priority, isCompleted }: ITask) {
     this.id = id;
     this.title = title;
     this.description = description;

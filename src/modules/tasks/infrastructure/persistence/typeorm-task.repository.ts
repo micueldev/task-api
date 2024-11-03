@@ -8,7 +8,10 @@ import { TaskNotFoundError } from '../../domain/task-not-found.error';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class TypeOrmTaskRepository extends TypeOrmRepository<TaskEntity> implements TaskRepository {
+export class TypeOrmTaskRepository
+  extends TypeOrmRepository<TaskEntity>
+  implements TaskRepository
+{
   protected entity(): EntityTarget<TaskEntity> {
     return TaskEntity;
   }
@@ -18,23 +21,18 @@ export class TypeOrmTaskRepository extends TypeOrmRepository<TaskEntity> impleme
   }
 
   async searchTasksBy(criteria: TaskCriteria): Promise<Task[]> {
-    const taskEntities = await this.createQueryBuilderByTaskCriteria(
-      criteria,
-    ).getMany();
-    return taskEntities.map(
-      (taskEntity) => Task.fromPrimitives({ ...taskEntity }),
+    const taskEntities =
+      await this.createQueryBuilderByTaskCriteria(criteria).getMany();
+    return taskEntities.map((taskEntity) =>
+      Task.fromPrimitives({ ...taskEntity }),
     );
   }
 
   async searchOneTaskBy(criteria: TaskCriteria): Promise<Task | null> {
     const taskEntity =
-      await this.createQueryBuilderByTaskCriteria(
-        criteria,
-      ).getOne();
+      await this.createQueryBuilderByTaskCriteria(criteria).getOne();
 
-    return taskEntity
-      ? Task.fromPrimitives({ ...taskEntity })
-      : null;
+    return taskEntity ? Task.fromPrimitives({ ...taskEntity }) : null;
   }
 
   async createTask(task: Task): Promise<void> {
@@ -42,10 +40,7 @@ export class TypeOrmTaskRepository extends TypeOrmRepository<TaskEntity> impleme
   }
 
   async updateTask(task: Task): Promise<void> {
-    const affected = await this.update(
-      task.getId(),
-      task.toPrimitives(),
-    );
+    const affected = await this.update(task.getId(), task.toPrimitives());
 
     if (affected != 1) {
       throw new TaskNotFoundError();
@@ -53,12 +48,9 @@ export class TypeOrmTaskRepository extends TypeOrmRepository<TaskEntity> impleme
   }
 
   async deleteTask(taskId: string): Promise<void> {
-    const affected = await this.update(
-      taskId,
-      {
-        deletedAt: new Date(),
-      },
-    );
+    const affected = await this.update(taskId, {
+      deletedAt: new Date(),
+    });
 
     if (affected != 1) {
       throw new TaskNotFoundError();
