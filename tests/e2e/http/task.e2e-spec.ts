@@ -3,6 +3,7 @@ import base from '../base';
 import { TASK_REPOSITORY_ALIAS, TaskRepository } from 'src/modules/tasks/domain/task.repository';
 import { DataSource } from 'typeorm';
 import { TypeOrmTaskEntity as TaskEntity } from 'src/modules/tasks/infrastructure/persistence/typeorm-task.entity';
+import { UuidMother } from 'tests/unit/modules/shared/domain/mothers/uuid.mother';
 
 describe('TasksController test', () => {
   let app: INestApplication;
@@ -35,5 +36,11 @@ describe('TasksController test', () => {
     base.expectTypeJson(res);
     const body = res.body;
     expect(body).toEqual(task.toPrimitives());
+  });
+
+  it('should get http error with a not existing task', async () => {
+    const res = await base.getTask(app, UuidMother.random());
+    base.expectNotFound(res);
+    base.expectTypeJson(res);
   });
 });

@@ -18,7 +18,7 @@ export const requestApi = ({
   path: string;
   body?: any;
 }): Promise<Response> => {
-  const apiPath = `${path}`;
+  const apiPath = `/api${path}`;
   const httpApp = request(app.getHttpServer());
 
   let _request: Request;
