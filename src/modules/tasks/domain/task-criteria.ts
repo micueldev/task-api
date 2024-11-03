@@ -1,5 +1,3 @@
-import { CriteriaWithId } from "src/modules/shared/domain/criteria-with-id";
+import { CriteriaWithId } from 'src/modules/shared/domain/criteria-with-id';
 
-export class TaskCriteria extends CriteriaWithId {
-  
-}
+export class TaskCriteria extends CriteriaWithId {}
