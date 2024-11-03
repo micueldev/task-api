@@ -4,10 +4,12 @@ import { TASK_REPOSITORY_ALIAS } from '../domain/task.repository';
 import { TypeOrmTaskRepository } from './persistence/typeorm-task.repository';
 import { UpdateTaskUseCase } from '../application/use-cases/update-task.use-case';
 import { DeleteTaskUseCase } from '../application/use-cases/delete-task.use-case';
+import { SearchTasksUseCase } from '../application/use-cases/search-tasks.use-case';
 
 @Module({
   controllers: [],
   providers: [
+    SearchTasksUseCase,
     CreateTaskUseCase,
     UpdateTaskUseCase,
     DeleteTaskUseCase,

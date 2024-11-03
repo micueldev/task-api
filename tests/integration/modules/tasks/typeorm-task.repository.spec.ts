@@ -9,7 +9,6 @@ import { TaskMother } from "tests/unit/modules/tasks/domain/mothers/task.mother"
 import { DataSource } from 'typeorm';
 import { TypeOrmTaskEntity as TaskEntity } from 'src/modules/tasks/infrastructure/persistence/typeorm-task.entity';
 import { TypeOrmTaskRepository as TaskRepository } from "src/modules/tasks/infrastructure/persistence/typeorm-task.repository";
-import { BooleanMother } from "tests/unit/modules/shared/domain/mothers/boolean.mother";
 import { StringMother } from "tests/unit/modules/shared/domain/mothers/string.mother";
 import { TaskPriorityMother } from "tests/unit/modules/tasks/domain/mothers/task-priority.mother";
 
@@ -37,6 +36,22 @@ describe('TypeOrmTaskRepository test', () => {
 
   afterAll(async () => {
     await dataSource.destroy();
+  });
+
+  it('should search tasks', async () => {
+    const task1 = await createRandomTask(taskRepository);
+    const task2 = await createRandomTask(taskRepository);
+    const task3 = await createRandomTask(taskRepository);
+    const tasks = [
+      task1,
+      task2,
+      task3,
+    ];
+
+    const taskFound = await taskRepository.searchTasksBy(
+      TaskCriteria.createEmpty(),
+    );
+    expect(taskFound).toEqual(tasks);
   });
 
   it('should not return task because it does not exist', async () => {

@@ -17,6 +17,15 @@ export class TypeOrmTaskRepository extends TypeOrmRepository<TaskEntity> impleme
     super(dataSource);
   }
 
+  async searchTasksBy(criteria: TaskCriteria): Promise<Task[]> {
+    const taskEntities = await this.createQueryBuilderByTaskCriteria(
+      criteria,
+    ).getMany();
+    return taskEntities.map(
+      (taskEntity) => Task.fromPrimitives({ ...taskEntity }),
+    );
+  }
+
   async searchOneTaskBy(criteria: TaskCriteria): Promise<Task | null> {
     const taskEntity =
       await this.createQueryBuilderByTaskCriteria(

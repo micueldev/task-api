@@ -13,13 +13,13 @@ describe('FindTask UseCase', () => {
   });
 
   it('should return the Task', async () => {
-    const Task = TaskMother.random();
-    taskRepository.returnOnSearchOneTaskBy(Task);
+    const task = TaskMother.random();
+    taskRepository.returnOnSearchOneTaskBy(task);
 
     const criteria = TaskCriteria.createEmpty();
     const response = await findTaskUseCase.run({ criteria });
 
-    expect(response).toEqual(Task);
+    expect(response).toEqual(task);
     taskRepository.assertSearchOneTaskByHasBeenCalledWith(criteria);
   });
 
