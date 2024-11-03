@@ -30,4 +30,15 @@ export class TaskMother {
       deletedAt,
     });
   }
+
+  static random(): Task{
+    return new Task({
+      id :UuidMother.random(),
+      title: StringMother.random(),
+      description: StringMother.random(),
+      priority: TaskPriorityMother.random(),
+      isCompleted: BooleanMother.random(),
+      deletedAt: DateMother.random(),
+    })
+  }
 }
