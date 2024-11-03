@@ -6,6 +6,7 @@ export class MockTaskRepository implements TaskRepository {
   private mockSearchOneTaskBy = jest.fn();
   private mockCreateTask = jest.fn();
   private mockUpdateTask = jest.fn();
+  private mockDeleteTask = jest.fn();
   private task: Task;
 
   returnOnSearchOneTaskBy(task: Task | null) {
@@ -33,7 +34,10 @@ export class MockTaskRepository implements TaskRepository {
     expect(this.mockUpdateTask).toHaveBeenCalledWith(task);
   }
 
-  deleteTask(taskId: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async deleteTask(taskId: string): Promise<void> {
+    this.mockDeleteTask(taskId);
+  }
+  assertDeleteTaskHasBeenCalledWith(taskId: string) {
+    expect(this.mockDeleteTask).toHaveBeenCalledWith(taskId);
   }
 }
